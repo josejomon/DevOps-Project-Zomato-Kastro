@@ -58,8 +58,8 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'docker') {
-                        sh "docker tag zomato kastrov/zomato:latest "
-                        sh "docker push kastrov/zomato:latest "
+                        sh "docker tag zomato jomon/zomato:latest "
+                        sh "docker push jomon/zomato:latest "
                     }
                 }
             }
@@ -68,16 +68,16 @@ pipeline {
             steps {
                 script{
                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){
-                       sh 'docker-scout quickview kastrov/zomato:latest'
-                       sh 'docker-scout cves kastrov/zomato:latest'
-                       sh 'docker-scout recommendations kastrov/zomato:latest'
+                       sh 'docker-scout quickview jomon/zomato:latest'
+                       sh 'docker-scout cves jomon/zomato:latest'
+                       sh 'docker-scout recommendations jomon/zomato:latest'
                    }
                 }
             }
         }
         stage ("Deploy to Container") {
             steps {
-                sh 'docker run -d --name zomato -p 3000:3000 kastrov/zomato:latest'
+                sh 'docker run -d --name zomato -p 3000:3000 jomon/zomato:latest'
             }
         }
     }
@@ -100,7 +100,7 @@ pipeline {
                 </body>
                 </html>
             """,
-            to: 'kastrokiran@gmail.com',
+            to: 'jomonjorisys@gmail.com',
             mimeType: 'text/html',
             attachmentsPattern: 'trivy.txt'
         }
